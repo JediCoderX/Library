@@ -19,7 +19,7 @@ public class Book {
 
     // One-to-many relationship BookBorrowing
     @OneToMany(mappedBy = "book")
-    private List<BookBorrowing> bookBorrowing = new ArrayList<>();
+    private List<BorrowRecord> bookBorrowing = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -53,11 +53,11 @@ public class Book {
         this.isbn = isbn;
     }
 
-    public List<BookBorrowing> getBookBorrowing() {
+    public List<BorrowRecord> getBookBorrowing() {
         return bookBorrowing;
     }
 
-    public void setBookBorrowing(List<BookBorrowing> bookBorrowing) {
+    public void setBookBorrowing(List<BorrowRecord> bookBorrowing) {
         this.bookBorrowing = bookBorrowing;
     }
 

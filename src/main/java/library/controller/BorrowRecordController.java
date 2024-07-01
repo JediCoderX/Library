@@ -11,34 +11,34 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import library.model.BookBorrowing;
-import library.repository.BookBorrowingRepository;
+import library.model.BorrowRecord;
+import library.repository.BorrowRecordRepository;
 
 @RestController
 @RequestMapping("/borrow-records")
-public class BookBorrowingController {
+public class BorrowRecordController {
 
-    private final BookBorrowingRepository repository;
+    private final BorrowRecordRepository repository;
 
-    BookBorrowingController(BookBorrowingRepository repository) {
+    BorrowRecordController(BorrowRecordRepository repository) {
         this.repository = repository;
     }
 
     // Get all records
     @GetMapping
-    List<BookBorrowing> all() {
+    List<BorrowRecord> all() {
         return repository.findAll();
     }
 
     // Get record by id
     @GetMapping("/{id}")
-    Optional<BookBorrowing> one(@PathVariable Long id) {
+    Optional<BorrowRecord> one(@PathVariable Long id) {
         return repository.findById(id);
     }
 
     // Create new record
     @PostMapping
-    public BookBorrowing saveRecords(@RequestBody BookBorrowing newRecord) {
+    public BorrowRecord saveRecords(@RequestBody BorrowRecord newRecord) {
         return repository.save(newRecord);
     }
 

@@ -3,7 +3,7 @@ package library.model;
 import jakarta.persistence.*;
 
 @Entity
-public class BookBorrowing {
+public class BorrowRecord {
 
     // Primary key with auto-increment
     @Id

@@ -3,6 +3,9 @@ package library.controller;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,10 +13,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import library.model.Librarian;
 import library.repository.LibrarianRepository;
+import library.specification.LibrarianSpecs;
 
 @RestController
 @RequestMapping("/librarians")
@@ -27,8 +32,8 @@ public class LibrarianController {
 
     // Get all librarians
     @GetMapping
-    List<Librarian> all() {
-        return repository.findAll();
+    Page<Librarian> all(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "3") int size) {
+        return repository.findAll(PageRequest.of(page, size));
     }
 
     // Get librarian by id
@@ -61,5 +66,14 @@ public class LibrarianController {
     @DeleteMapping("/{id}")
     public void deleteLibrarian(@PathVariable Long id) {
         repository.deleteById(id);
+    }
+
+    // Search Librarian
+    @GetMapping("/search")
+    public List<Librarian> searchLibrarian(@RequestParam(required = false) String name) {
+
+        Specification<Librarian> spec = Specification.where(LibrarianSpecs.hasName(name));
+
+        return repository.findAll(spec);
     }
 }
